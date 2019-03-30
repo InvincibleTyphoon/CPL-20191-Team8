@@ -15,6 +15,8 @@ public class Settings {
 
     /*******************************센서 관련 설정***************************************/
     public static float sensorDataUpdateInterval = 0.0f;
+    public static String MAGNETIC_SENSOR_JSON = "Magnetic";
+    public static String GYRO_SENSOR_JSON = "Gyro";
 
     public static ArrayList<Float> startCoordinate = new ArrayList<Float>(
             Arrays.asList(0f,0f,0f)
