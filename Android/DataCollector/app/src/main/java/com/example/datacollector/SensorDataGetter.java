@@ -20,9 +20,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class SensorDataGetter implements SensorEventListener {
-    //센서 데이터 JsonObject 타입 큐
-    private LinkedBlockingQueue<JSONObject> gatheredDatum = new LinkedBlockingQueue<JSONObject>();
-
     //측청된 최근 값들
     private float[] gyroVector = {0,0,0};
     private float[] magneticVector = {0,0,0};
@@ -35,34 +32,24 @@ public class SensorDataGetter implements SensorEventListener {
                     sensorManager.getDefaultSensor(sensorType),
                     sensorManager.SENSOR_DELAY_NORMAL);
         }
-
-        //정해진 시간마다 센서 데이터를 Json화하여 리스트에 추가
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    if (Settings.collectingSensorTypes.contains(Sensor.TYPE_GYROSCOPE)) {
-                        jsonObject.put(Settings.GYRO_SENSOR_JSON,gyroVector.toString());
-                    }
-                    if (Settings.collectingSensorTypes.contains(Sensor.TYPE_MAGNETIC_FIELD)) {
-                        jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,magneticVector);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },(int)(Settings.sensorDataUpdateInterval * 1000));
     }
 
     //아직 처리되지 않은 가장 오래된 센서 데이터를 Json 포맷으로 리턴
     public JSONObject getSensorDataJson()
     {
-        if(gatheredDatum.size() <= 0)
-            return null;
-
-        return gatheredDatum.poll();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (Settings.collectingSensorTypes.contains(Sensor.TYPE_GYROSCOPE)) {
+                jsonObject.put(Settings.GYRO_SENSOR_JSON, "[" + gyroVector[0] + "," + gyroVector[1] + "," + gyroVector[2] + "]");
+                //jsonObject.put(Settings.GYRO_SENSOR_JSON, (Object)gyroVector);
+            }
+            if (Settings.collectingSensorTypes.contains(Sensor.TYPE_MAGNETIC_FIELD)) {
+                //jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,"[" + magneticVector[0] + "," + magneticVector[1] + "," + magneticVector[2] + "]");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
     @Override

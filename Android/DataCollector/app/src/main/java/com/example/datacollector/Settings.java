@@ -14,7 +14,8 @@ public class Settings {
     //////////////////////////////////////////////////////////////////////////////////////
 
     /*******************************센서 관련 설정***************************************/
-    public static float sensorDataUpdateInterval = 0.0f;
+    public static String SENSOR_JSON = "Sensor";
+    public static float sensorDataUpdateInterval = 0.5f;
     public static String MAGNETIC_SENSOR_JSON = "Magnetic";
     public static String GYRO_SENSOR_JSON = "Gyro";
 
@@ -27,10 +28,12 @@ public class Settings {
     );
     ////////////////////////////////////////////////////////////////////////////////////
 
-    /*****************************와이파이 관련 설정******************************************/
+    /*****************************와이파이 스캔 관련 설정******************************************/
+    public static String WIFI_JSON = "WifiInfo";
     public static String WIFI_SSID = "SSID";
-    public static String WIFI_BSID = "BSID";
+    public static String WIFI_BSSID = "BSID";
     public static String WIFI_LEVEL = "WIFI_LEVEL";
+    public static String WIFI_LEVEL_JSON = "WifiLevel";
 
     public static ArrayList<String> collectingWifiScanResultDataTypes = new ArrayList<String>(
             Arrays.asList(WIFI_SSID,WIFI_LEVEL)
