@@ -48,7 +48,7 @@ public class HttpRequester {
                         outputStream.write(jsonObj.toString().getBytes());
                         outputStream.flush();
                         outputStream.close();
-
+                        Log.i("Thirty","Sending : " + jsonObj.toString());
                         Log.i("Thirty", "response code : " + myConnection.getResponseCode());
                         myConnection.disconnect();
                     } catch (IOException e) {

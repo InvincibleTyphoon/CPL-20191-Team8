@@ -34,7 +34,7 @@ public class SensorDataGetter implements SensorEventListener {
         }
     }
 
-    //아직 처리되지 않은 가장 오래된 센서 데이터를 Json 포맷으로 리턴
+    //최근 센서 측정값을 Json 포멧으로 리턴
     public JSONObject getSensorDataJson()
     {
         JSONObject jsonObject = new JSONObject();
@@ -44,7 +44,7 @@ public class SensorDataGetter implements SensorEventListener {
                 //jsonObject.put(Settings.GYRO_SENSOR_JSON, (Object)gyroVector);
             }
             if (Settings.collectingSensorTypes.contains(Sensor.TYPE_MAGNETIC_FIELD)) {
-                //jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,"[" + magneticVector[0] + "," + magneticVector[1] + "," + magneticVector[2] + "]");
+                jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,"[" + magneticVector[0] + "," + magneticVector[1] + "," + magneticVector[2] + "]");
             }
         } catch (JSONException e) {
             e.printStackTrace();

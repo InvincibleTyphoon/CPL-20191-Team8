@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Settings {
     /*******************************서버 관련 설정****************************************/
-    public static String serverAddress = "http://192.168.0.2:1337/testPost";
+    public static String serverAddress = "http://192.168.123.199:1337/testPost";
     public static ArrayList<ArrayList<String>> httpPostRequestProperty = new ArrayList<ArrayList<String>>();
     //////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,8 @@ public class Settings {
     );
 
     public static ArrayList<Integer> collectingSensorTypes = new ArrayList<Integer>(
-            Arrays.asList(Sensor.TYPE_MAGNETIC_FIELD, Sensor.TYPE_GYROSCOPE)
+            //Arrays.asList(Sensor.TYPE_MAGNETIC_FIELD, Sensor.TYPE_GYROSCOPE)
+            Arrays.asList(Sensor.TYPE_MAGNETIC_FIELD)
     );
     ////////////////////////////////////////////////////////////////////////////////////
 

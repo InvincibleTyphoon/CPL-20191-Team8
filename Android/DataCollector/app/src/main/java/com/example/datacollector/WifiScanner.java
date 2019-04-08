@@ -40,16 +40,16 @@ public class WifiScanner {
                     if(Settings.collectingWifiScanResultDataTypes.contains(Settings.WIFI_BSSID))
                         item.put(Settings.WIFI_SSID, bssid);
                     if(Settings.collectingWifiScanResultDataTypes.contains(Settings.WIFI_LEVEL))
-                        item.put(Settings.WIFI_LEVEL_JSON, level);
-                    jsonArr.put(item);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        try {
-            jsonObject.put(Settings.WIFI_JSON,jsonArr);
+            item.put(Settings.WIFI_LEVEL_JSON, level);
+            jsonArr.put(item);
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+}
+        try {
+                jsonObject.put(Settings.WIFI_JSON,jsonArr);
+                } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonObject;

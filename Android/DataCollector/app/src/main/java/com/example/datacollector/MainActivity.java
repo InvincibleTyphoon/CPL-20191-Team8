@@ -40,13 +40,15 @@ public class MainActivity extends AppCompatActivity {
                 if(!isCollectingMode)
                     return;
 
+                //센서 데이터 및 와이파이 데이터 Json화
                 JSONObject sensorJson = sensorDataGetter.getSensorDataJson();
                 JSONObject wifiScanResultJson = wifiScanner.getWifiScanResultJson();
                 if(sensorJson == null)
                     return;
 
+                //센서 데이터와 와이파이 데이터를 하나의 Json 안에 합치는 과정
                 try {
-                    JSONObject jsonObject = new JSONObject();
+                    final JSONObject jsonObject = new JSONObject();
 
 
                     for (Iterator<String> it = sensorJson.keys(); it.hasNext(); ) {
@@ -59,10 +61,18 @@ public class MainActivity extends AppCompatActivity {
                         jsonObject.put(key,wifiScanResultJson.get(key));
                     }
 
-                    //((TextView)findViewById(R.id.JsonData)).setText(jsonObject.toString());
-                    //((TextView)findViewById(R.id.JsonData)).setText("asdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                    Log.i("Thirty","Seding : " + jsonObject.toString());
+                    final TextView jsonTextView = (TextView)findViewById(R.id.JsonData);
 
+                    //긴 텍스트를 TextView에 삽입시 오류 발생
+                    jsonTextView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            jsonTextView.setText(jsonObject.toString());
+                        }
+                    });
+
+
+                    //전송 큐에 데이터 탑재시킴
                     httpRequester.addToSendQueue(sensorDataGetter.getSensorDataJson());
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -71,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         },0, (int) (Settings.sensorDataUpdateInterval * 1000));
     }
 
+
+    //데이터 수집 버튼 클릭 이벤트 처리
     public void onDataCollectButtonClicked(View view)
     {
         if(isCollectingMode)
@@ -84,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //전송 버튼 클릭
     public void onSendButtonClicked(View view)
     {
         httpRequester.postObjectsInQueue();
