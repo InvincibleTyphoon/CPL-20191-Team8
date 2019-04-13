@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,11 +41,21 @@ public class SensorDataGetter implements SensorEventListener {
         JSONObject jsonObject = new JSONObject();
         try {
             if (Settings.collectingSensorTypes.contains(Sensor.TYPE_GYROSCOPE)) {
-                jsonObject.put(Settings.GYRO_SENSOR_JSON, "[" + gyroVector[0] + "," + gyroVector[1] + "," + gyroVector[2] + "]");
+                JSONArray jsonArr = new JSONArray();
+                jsonArr.put(gyroVector[0]);
+                jsonArr.put(gyroVector[1]);
+                jsonArr.put(gyroVector[2]);
+                jsonObject.put(Settings.GYRO_SENSOR_JSON,jsonArr);
+                //jsonObject.put(Settings.GYRO_SENSOR_JSON, "[" + gyroVector[0] + "," + gyroVector[1] + "," + gyroVector[2] + "]");
                 //jsonObject.put(Settings.GYRO_SENSOR_JSON, (Object)gyroVector);
             }
             if (Settings.collectingSensorTypes.contains(Sensor.TYPE_MAGNETIC_FIELD)) {
-                jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,"[" + magneticVector[0] + "," + magneticVector[1] + "," + magneticVector[2] + "]");
+                JSONArray jsonArr = new JSONArray();
+                jsonArr.put(magneticVector[0]);
+                jsonArr.put(magneticVector[1]);
+                jsonArr.put(magneticVector[2]);
+                jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,jsonArr);
+                //jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,"[" + magneticVector[0] + "," + magneticVector[1] + "," + magneticVector[2] + "]");
             }
         } catch (JSONException e) {
             e.printStackTrace();

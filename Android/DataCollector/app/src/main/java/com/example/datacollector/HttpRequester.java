@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -31,6 +32,23 @@ public class HttpRequester {
             @Override
             public void run() {
                 URL serverUrl = null;
+                JSONObject jsonObj = sendQueue.poll();
+                try {
+                    serverUrl = new URL(Settings.serverAddress + "?data="+jsonObj.toString());
+                    HttpURLConnection myConnection = null;
+                    myConnection = (HttpURLConnection) serverUrl.openConnection();
+                    myConnection.setRequestMethod("POST");
+                    myConnection.setDoOutput(true);
+                    Log.i("Thirty", "response code : " + myConnection.getResponseCode());
+                    myConnection.disconnect();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                /*
                 try {
                     serverUrl = new URL(Settings.serverAddress);
                 } catch (MalformedURLException e) {
@@ -44,6 +62,7 @@ public class HttpRequester {
                         myConnection.setDoOutput(true);
                         OutputStream outputStream = new BufferedOutputStream(myConnection.getOutputStream());
 
+
                         JSONObject jsonObj = sendQueue.poll();
                         outputStream.write(jsonObj.toString().getBytes());
                         outputStream.flush();
@@ -55,6 +74,7 @@ public class HttpRequester {
                         e.printStackTrace();
                     }
                 }
+                */
             }
         });
 }

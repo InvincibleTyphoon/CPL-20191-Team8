@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                     //전송 큐에 데이터 탑재시킴
-                    httpRequester.addToSendQueue(sensorDataGetter.getSensorDataJson());
+                    //httpRequester.addToSendQueue(sensorDataGetter.getSensorDataJson());
+                    httpRequester.addToSendQueue(jsonObject);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
