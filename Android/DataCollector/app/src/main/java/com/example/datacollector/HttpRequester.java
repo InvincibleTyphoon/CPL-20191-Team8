@@ -48,33 +48,6 @@ public class HttpRequester {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                /*
-                try {
-                    serverUrl = new URL(Settings.serverAddress);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-                while (sendQueue.size() > 0) {
-                    HttpURLConnection myConnection = null;
-                    try {
-                        myConnection = (HttpURLConnection) serverUrl.openConnection();
-                        myConnection.setRequestMethod("POST");
-                        myConnection.setDoOutput(true);
-                        OutputStream outputStream = new BufferedOutputStream(myConnection.getOutputStream());
-
-
-                        JSONObject jsonObj = sendQueue.poll();
-                        outputStream.write(jsonObj.toString().getBytes());
-                        outputStream.flush();
-                        outputStream.close();
-                        Log.i("Thirty","Sending : " + jsonObj.toString());
-                        Log.i("Thirty", "response code : " + myConnection.getResponseCode());
-                        myConnection.disconnect();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                */
             }
         });
 }

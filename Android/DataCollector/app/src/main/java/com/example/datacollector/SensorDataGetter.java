@@ -55,7 +55,6 @@ public class SensorDataGetter implements SensorEventListener {
                 jsonArr.put(magneticVector[1]);
                 jsonArr.put(magneticVector[2]);
                 jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,jsonArr);
-                //jsonObject.put(Settings.MAGNETIC_SENSOR_JSON,"[" + magneticVector[0] + "," + magneticVector[1] + "," + magneticVector[2] + "]");
             }
         } catch (JSONException e) {
             e.printStackTrace();
