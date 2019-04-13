@@ -12,6 +12,22 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/XCoordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="xCoord"
+            android:inputType="numberDecimal"
+            android:text="0.0" />
+
+        <EditText
+            android:id="@+id/YCoordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="yCoord"
+            android:inputType="numberDecimal"
+            android:text="0.0" />
+
         <TextView
             android:id="@+id/JsonData"
             android:layout_width="match_parent"

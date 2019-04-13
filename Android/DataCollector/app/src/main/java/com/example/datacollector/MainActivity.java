@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private SensorDataGetter sensorDataGetter = null;
     private WifiScanner wifiScanner = null;
     private boolean isCollectingMode = false;
+
+    private float xCoord = 0.0f;
+    private float yCoord = 0.0f;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     final TextView jsonTextView = (TextView)findViewById(R.id.JsonData);
-
-                    //긴 텍스트를 TextView에 삽입시 오류 발생
+                    addCoordInformationIntoJson(jsonObject,xCoord,yCoord);
+                    //UI 작업은 메인 쓰레드에서 하지 않으면 오류가 발생 할 수 있음.
+                    //이 코드는 다른 쓰레드에서 UI 작업을 할 수 있게 해줌.
                     jsonTextView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -79,6 +84,21 @@ public class MainActivity extends AppCompatActivity {
         },0, (int) (Settings.sensorDataUpdateInterval * 1000));
     }
 
+    void addCoordInformationIntoJson(JSONObject jsonObject, float x, float y) {
+        try {
+            jsonObject.put("x",x);
+            jsonObject.put("y",y);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //현재 좌표 설정
+    void setCurrentCoord()
+    {
+        this.xCoord = Float.parseFloat(((EditText)findViewById(R.id.XCoordEditText)).getText().toString());
+        this.yCoord = Float.parseFloat(((EditText)findViewById(R.id.YCoordEditText)).getText().toString());
+    }
 
     //데이터 수집 버튼 클릭 이벤트 처리
     public void onDataCollectButtonClicked(View view)
@@ -89,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             ((Button) view).setText("Start");
         }else{
             isCollectingMode = true;
+            setCurrentCoord();
             ((Button) view).setText("Stop");
         }
 
