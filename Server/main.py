@@ -3,7 +3,7 @@
 # 포스트 예제
 
 from flask import Flask, make_response
-from flask import request
+from flask import request, Request
 from flask_restful import Resource, Api
 from flask_restful import reqparse
 from pprint import pprint 
@@ -15,6 +15,28 @@ print(db.getData("it2", "1.1"))
 
 app = Flask(__name__)
 api = Api(app)
+
+
+# the test of reading payload (JSON)
+class PostTest(Resource):
+    def post(self):
+        try:
+            # reads request
+            parser = reqparse.RequestParser()
+            parser.add_argument('data', type=str)
+            args = parser.parse_args()
+
+            _userData = json.loads(args['data'])
+            pprint(_userData)
+            print(request.data)         # read all payload
+            print(request.get_data())   # read data
+            print(request.get_json())   # read only json
+
+            return {
+                "status": "success"
+            }
+        except Exception as e:
+            return {'error': str(e)}
 
 
 
@@ -63,7 +85,10 @@ class CreateUser(Resource):
         except Exception as e:
             return {'error': str(e)}
 
+
 api.add_resource(CreateUser, '/')
+api.add_resource(PostTest, '/test')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
