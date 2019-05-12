@@ -1,10 +1,12 @@
 package com.example.serviceapp;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,14 +24,13 @@ import org.json.JSONObject;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity  implements SensorEventListener, PositionReceivingEventObserver {
-
-
     //현재 좌표
     ArrayList<Float> coord;
 
@@ -43,10 +44,17 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     //그래프
     PointsGraphSeries<DataPoint> series;
 
+    //서비스 진행중인지 여부
     boolean isServiceOn = false;
 
+    //서버에 좌표 분석을 요청
     PositionRequester_ImmediateResponse requester = null;
 
+    //센서 값 가져옴
+    SensorDataGetter sensorDataGetter = null;
+
+    //와이파이 스캐너
+    private WifiScanner wifiScanner = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,10 +99,21 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                 if(!isServiceOn)
                     return;
                 JSONObject sendObject = new JSONObject();
+                JSONObject sensorJson = sensorDataGetter.getSensorDataJson();
+                JSONObject wifiScanResultJson = wifiScanner.getWifiScanResultJson();
                 try {
                     //sendObject.put("PDRPos",new String(stepDetectorCoord.get(0) + "," + stepDetectorCoord.get(1)));
                     sendObject.put("xCoord",coord.get(0).toString());
                     sendObject.put("yCoord",coord.get(1).toString());
+                    for (Iterator<String> it = sensorJson.keys(); it.hasNext(); ) {
+                        String key = it.next();
+                        sendObject.put(key,sensorJson.get(key));
+                    }
+
+                    for (Iterator<String> it = wifiScanResultJson.keys(); it.hasNext(); ) {
+                        String key = it.next();
+                        sendObject.put(key,wifiScanResultJson.get(key));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +121,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                 requester.sendGetRequest();
             }
         },0, (int) (Settings.sensorDataUpdateInterval * 1000));
-
+        sensorDataGetter = new SensorDataGetter((SensorManager)getSystemService(SENSOR_SERVICE));
+        wifiScanner = new WifiScanner((WifiManager)getSystemService(Context.WIFI_SERVICE));
     }
 
     void updateText()
