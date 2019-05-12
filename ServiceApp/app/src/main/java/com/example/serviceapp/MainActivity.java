@@ -30,12 +30,17 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity  implements SensorEventListener, PositionReceivingEventObserver {
 
     ArrayList<Float> rotation;
-    ArrayList<Float> stepDetectorCoord;
-    float stepSize = 1.0f;
+    //
+    ArrayList<Float> coord;
+
+    // 추측항법을 위한 방향값들
     float seta = 0.0f;
     float[] orientation = {0.0f,0.0f,0.0f};
+
     GraphView graph;
     Date accelUpdateTime;
+
+    //그래프
     PointsGraphSeries<DataPoint> series;
 
     boolean isServiceOn = false;
@@ -51,10 +56,10 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         rotation.add(0.0f);
         rotation.add(0.0f);
 
-        stepDetectorCoord = new ArrayList<Float>(3);
-        stepDetectorCoord.add(0.0f);
-        stepDetectorCoord.add(0.0f);
-        stepDetectorCoord.add(0.0f);
+        coord = new ArrayList<Float>(3);
+        coord.add(0.0f);
+        coord.add(0.0f);
+        coord.add(0.0f);
 
         SensorManager sensorManager = ((SensorManager)getSystemService(SENSOR_SERVICE));
         Sensor sensor = null;
@@ -92,8 +97,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                 JSONObject sendObject = new JSONObject();
                 try {
                     //sendObject.put("PDRPos",new String(stepDetectorCoord.get(0) + "," + stepDetectorCoord.get(1)));
-                    sendObject.put("xCoord",stepDetectorCoord.get(0).toString());
-                    sendObject.put("yCoord",stepDetectorCoord.get(1).toString());
+                    sendObject.put("xCoord",coord.get(0).toString());
+                    sendObject.put("yCoord",coord.get(1).toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -106,7 +111,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     void updateText()
     {
-        ((TextView)findViewById(R.id.CoordText)).setText("Coord : (" + stepDetectorCoord.get(0) + ", " + stepDetectorCoord.get(1) + "," + stepDetectorCoord.get(2) + ")");
+        ((TextView)findViewById(R.id.CoordText)).setText("Coord : (" + coord.get(0) + ", " + coord.get(1) + "," + coord.get(2) + ")");
         ((TextView)findViewById(R.id.RotationVectorText)).setText("Rotation : (" + rotation.get(0) + ", " + rotation.get(1) + "," + rotation.get(2) + "\nseta:" + seta / 3.14f+"pi)");
         ((TextView)findViewById(R.id.OrientationText)).setText("Orientation : " + "(" + orientation[0] + "," + orientation[1] + "," + orientation[2] + ")");
     }
@@ -115,8 +120,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     public void onSensorChanged(SensorEvent event) {
         if(event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR)
         {
-            stepDetectorCoord.set(0,(float)(stepDetectorCoord.get(0) + Math.cos(seta) * stepSize));
-            stepDetectorCoord.set(1,(float)(stepDetectorCoord.get(1) + Math.sin(seta) * stepSize));
+            coord.set(0,(float)(coord.get(0) + Math.cos(seta) * Settings.stepSize));
+            coord.set(1,(float)(coord.get(1) + Math.sin(seta) * Settings.stepSize));
         }
 
         if(event.sensor.getType() == Sensor.TYPE_ORIENTATION)
@@ -135,8 +140,8 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     @Override
     public void positionReceivingEventUpdate(float x, float y) {
-        this.stepDetectorCoord.set(0, x);
-        this.stepDetectorCoord.set(1, y);
+        this.coord.set(0, x);
+        this.coord.set(1, y);
         PointsGraphSeries<DataPoint> series = new PointsGraphSeries<DataPoint>(new DataPoint[] {
                 new DataPoint(x,y)
         });
@@ -145,12 +150,12 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     public void setPositionButtonClicked(View v)
     {
-        stepDetectorCoord.set(0,
+        coord.set(0,
                 Float.parseFloat(
                         ((EditText)findViewById(R.id.xCoord)).getText().toString()
                 )
         );
-        stepDetectorCoord.set(1,
+        coord.set(1,
                 Float.parseFloat(
                         ((EditText)findViewById(R.id.yCoord)).getText().toString()
                 )
