@@ -14,6 +14,7 @@ public class Settings {
     /*******************************센서 관련 설정***************************************/
     public static String SENSOR_JSON = "Sensor";
     public static float sensorDataUpdateInterval = 0.5f;
+    public static float requestInterval = 0.5f;
     public static String MAGNETIC_SENSOR_JSON = "Magnetic";
     public static String GYRO_SENSOR_JSON = "Gyro";
 
