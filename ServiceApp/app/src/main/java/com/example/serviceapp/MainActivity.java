@@ -170,4 +170,18 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
             ((Button)findViewById(R.id.StartServiceButton)).setText("Set Service Off");
         }
     }
+
+    public void setGraphSizeButtonClicked(View v)
+    {
+        float width = Float.parseFloat(((EditText)findViewById(R.id.GraphWidth)).getText().toString());
+        float height = Float.parseFloat(((EditText)findViewById(R.id.GraphHeight)).getText().toString());
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMaxX(width/2);
+        graph.getViewport().setMaxXAxisSize(width/2);
+        graph.getViewport().setMaxY(height/2);
+        graph.getViewport().setMaxYAxisSize(height/2);
+        graph.getViewport().setMinX(-width/2);
+        graph.getViewport().setMinY(-height/2);
+    }
 }
