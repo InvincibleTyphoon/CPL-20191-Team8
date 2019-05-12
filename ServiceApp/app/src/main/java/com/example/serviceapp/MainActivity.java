@@ -29,8 +29,8 @@ import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity  implements SensorEventListener, PositionReceivingEventObserver {
 
-    ArrayList<Float> rotation;
-    //
+
+    //현재 좌표
     ArrayList<Float> coord;
 
     // 추측항법을 위한 방향값들
@@ -51,10 +51,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        rotation = new ArrayList<Float>(3);
-        rotation.add(0.0f);
-        rotation.add(0.0f);
-        rotation.add(0.0f);
 
         coord = new ArrayList<Float>(3);
         coord.add(0.0f);
@@ -112,7 +108,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     void updateText()
     {
         ((TextView)findViewById(R.id.CoordText)).setText("Coord : (" + coord.get(0) + ", " + coord.get(1) + "," + coord.get(2) + ")");
-        ((TextView)findViewById(R.id.RotationVectorText)).setText("Rotation : (" + rotation.get(0) + ", " + rotation.get(1) + "," + rotation.get(2) + "\nseta:" + seta / 3.14f+"pi)");
         ((TextView)findViewById(R.id.OrientationText)).setText("Orientation : " + "(" + orientation[0] + "," + orientation[1] + "," + orientation[2] + ")");
     }
 

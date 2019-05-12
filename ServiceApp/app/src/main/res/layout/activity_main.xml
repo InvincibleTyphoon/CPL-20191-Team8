@@ -89,13 +89,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/RotationVectorText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:hint="X"/>
-
-        <TextView
             android:id="@+id/OrientationText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
