@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Settings {
     /*******************************서버 관련 설정****************************************/
-    public static String serverAddress = "http://192.168.43.50:5000";
+    public static String serverAddress = "http://175.113.48.102:5000/test";
     public static ArrayList<ArrayList<String>> httpPostRequestProperty = new ArrayList<ArrayList<String>>();
     //////////////////////////////////////////////////////////////////////////////////////
 

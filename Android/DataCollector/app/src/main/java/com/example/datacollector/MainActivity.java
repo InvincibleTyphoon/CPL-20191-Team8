@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                     httpRequester.addToSendQueue(jsonObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             }
         },0, (int) (Settings.sensorDataUpdateInterval * 1000));
     }
