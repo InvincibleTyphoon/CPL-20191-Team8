@@ -22,20 +22,22 @@ class PostTest(Resource):
     def post(self):
         try:
             # reads request
-            parser = reqparse.RequestParser()
-            parser.add_argument('data', type=str)
-            args = parser.parse_args()
+            # parser = reqparse.RequestParser()
+            # parser.add_argument('data', type=str)
+            # args = parser.parse_args()
 
-            _userData = json.loads(args['data'])
-            pprint(_userData)
-            print(request.data)         # read all payload
-            print(request.get_data())   # read data
-            print(request.get_json())   # read only json
+            # _userData = json.loads(args['data'])
+            # pprint(_userData)
+            print("data,", request.data)         # read all payload
+            print("get_data(),", request.get_data())   # read data
+            print("get_json(),", request.get_json())   # read only json
+            print("stream.read(),", request.stream.read())
 
             return {
                 "status": "success"
             }
         except Exception as e:
+            print("Error:", str(e))
             return {'error': str(e)}
 
 
