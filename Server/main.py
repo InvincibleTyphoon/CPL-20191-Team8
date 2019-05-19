@@ -11,7 +11,7 @@ from db import DBConn
 import json
 
 db = DBConn.DBConn('config/silnaewichi-2c66f-firebase-adminsdk-t6ob2-a6dfec601d.json')
-print(db.getData("it2", "1.1"))
+# print(db.getData("it2", 10, 10))
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,16 +22,39 @@ class PostTest(Resource):
     def post(self):
         try:
             # reads request
-            # parser = reqparse.RequestParser()
-            # parser.add_argument('data', type=str)
-            # args = parser.parse_args()
+            parser = reqparse.RequestParser()
+            parser.add_argument('data', type=str)
+            args = parser.parse_args()
 
-            # _userData = json.loads(args['data'])
-            # pprint(_userData)
-            print("data,", request.data)         # read all payload
-            print("get_data(),", request.get_data())   # read data
-            print("get_json(),", request.get_json())   # read only json
-            print("stream.read(),", request.stream.read())
+            _userData = json.loads(args['data'])
+            pprint(_userData)
+            # print("data,", request.data)         # read all payload
+            # print("get_data(),", request.get_data())   # read data
+            # print("get_json(),", request.get_json())   # read only json
+            # print("stream.read(),", request.stream.read())
+            
+            # parsing to commit db
+            _userMagnetic = _userData['Magnetic']
+            _userWifiInfo = _userData['WifiInfo']
+            _userX = _userData['x']
+            _userY = _userData['y']
+
+            sampleMagnetic = dict()
+            sampleMagnetic[u'x'] = _userMagnetic[0]
+            sampleMagnetic[u'y'] = _userMagnetic[1]
+            sampleMagnetic[u'z'] = _userMagnetic[2]
+            
+            sampleWifi = dict()
+            for i, data in enumerate(_userWifiInfo):
+                sampleWifi[str(i)] = data
+
+            pprint(sampleMagnetic)
+            pprint(sampleWifi)
+
+            # commit db
+            point = DBConn.Point(x=_userX, y=_userY ,magnetic=sampleMagnetic,wifiscan=sampleWifi)
+            db.setData('it5',point.to_dict())
+            pprint('done')
 
             return {
                 "status": "success"
@@ -70,8 +93,8 @@ class CreateUser(Resource):
             pprint(sampleWifi)
             
             # commit db
-            point = DBConn.Point(key='1.1' ,magnetic=sampleMagnetic,wifiscan=sampleWifi)
-            db.setData('it2','1.1',point.to_dict())
+            point = DBConn.Point(x=1, y=1 ,magnetic=sampleMagnetic,wifiscan=sampleWifi)
+            db.setData('it2',point.to_dict())
             pprint('done')
 
             return {

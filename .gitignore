@@ -1,1 +1,3 @@
 
+*.pyc
+Server/db/__pycache__/DBConn.cpython-36.pyc

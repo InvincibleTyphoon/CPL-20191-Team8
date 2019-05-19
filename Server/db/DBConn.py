@@ -40,7 +40,7 @@ class DBConn:
             i = 0
             for wifiLvDoc in wifiLvDocs:
                 wifitemp[i] = wifiLvDoc.to_dict()
-                wifiPosDocs =  self.db.collection('data').document(dataKey).collection('wifi').where(u'ssid',u'==',wifitemp[i]['ssid']).get()
+                wifiPosDocs =  self.db.collection('data').document(dataKey).collection('wifi').where(u'SSID',u'==',wifitemp[i]['SSID']).get()
                 temp = dict()
                 flag = False
                 for wifiPosDoc in wifiPosDocs:
