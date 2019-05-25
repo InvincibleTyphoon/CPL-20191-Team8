@@ -123,6 +123,18 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         },0, (int) (Settings.sensorDataUpdateInterval * 1000));
         sensorDataGetter = new SensorDataGetter((SensorManager)getSystemService(SENSOR_SERVICE));
         wifiScanner = new WifiScanner((WifiManager)getSystemService(Context.WIFI_SERVICE));
+
+
+        /***********************테스팅용 초기 좌표 입력*****************************/
+        int size = Settings.initialX.size();
+        for(int i = 0;  i < size; i++)
+        {
+            PointsGraphSeries<DataPoint> series = new PointsGraphSeries<DataPoint>(new DataPoint[] {
+                    new DataPoint(Settings.initialX.get(i),Settings.initialY.get(i))
+            });
+            graph.addSeries(series);
+        }
+        ////////////////////////////////////////////////////////////////////
     }
 
     void updateText()
@@ -203,5 +215,19 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         graph.getViewport().setMaxYAxisSize(height/2);
         graph.getViewport().setMinX(-width/2);
         graph.getViewport().setMinY(-height/2);
+    }
+
+    public void testGraphPositionInputButtonClicked(View v)
+    {
+        float x =  Float.parseFloat(
+                ((EditText)findViewById(R.id.xCoord2)).getText().toString()
+        );
+        float y =  Float.parseFloat(
+                ((EditText)findViewById(R.id.yCoord2)).getText().toString()
+        );
+        PointsGraphSeries<DataPoint> series = new PointsGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(x,y)
+        });
+        graph.addSeries(series);
     }
 }

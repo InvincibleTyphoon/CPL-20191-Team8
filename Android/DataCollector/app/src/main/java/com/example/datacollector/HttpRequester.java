@@ -34,8 +34,8 @@ public class HttpRequester {
                 URL serverUrl = null;
                 JSONObject jsonObj = sendQueue.poll();
                 try {
-                    //serverUrl = new URL(Settings.serverAddress + "?data="+jsonObj.toString());  //리퀘스트 패러미터로 Json 데이터를 전송
-                    serverUrl = new URL(Settings.serverAddress);  //리퀘스트 패러미터로 넘기지 않음.
+                    serverUrl = new URL(Settings.serverAddress + "?data="+jsonObj.toString());  //리퀘스트 패러미터로 Json 데이터를 전송
+                    //serverUrl = new URL(Settings.serverAddress);  //리퀘스트 패러미터로 넘기지 않음.
                     HttpURLConnection myConnection = null;
                     myConnection =                    (HttpURLConnection) serverUrl.openConnection();
                     myConnection.setRequestMethod("POST");

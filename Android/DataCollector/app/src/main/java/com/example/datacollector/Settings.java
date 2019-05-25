@@ -32,12 +32,12 @@ public class Settings {
     /*****************************와이파이 스캔 관련 설정******************************************/
     public static String WIFI_JSON = "WifiInfo";
     public static String WIFI_SSID = "SSID";
-    public static String WIFI_BSSID = "BSID";
+    public static String WIFI_BSSID = "BSSID";
     public static String WIFI_LEVEL = "WIFI_LEVEL";
     public static String WIFI_LEVEL_JSON = "WifiLevel";
 
     public static ArrayList<String> collectingWifiScanResultDataTypes = new ArrayList<String>(
-            Arrays.asList(WIFI_SSID,WIFI_LEVEL)
+            Arrays.asList(WIFI_SSID,WIFI_LEVEL,WIFI_BSSID)
     );
     /////////////////////////////////////////////////////////////////////////////////////////
 }

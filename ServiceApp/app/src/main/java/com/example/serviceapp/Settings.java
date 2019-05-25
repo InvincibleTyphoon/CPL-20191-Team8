@@ -2,6 +2,8 @@ package com.example.serviceapp;
 
 import android.hardware.Sensor;
 
+import com.jjoe64.graphview.series.DataPoint;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,4 +46,16 @@ public class Settings {
     public static float stepSize = 1.0f;
 
     ///////////////////////////////////////////////////////////////////////
+
+
+
+    /***************************테스팅용 초기 데이터 삽입***********************************************/
+    public static ArrayList<Integer> initialX = new ArrayList<Integer>(
+            Arrays.asList(1,2,3,4,5,6,7,8,9,10)
+    );
+    public static ArrayList<Integer> initialY = new ArrayList<Integer>(
+            Arrays.asList(1,1,1,1,1,1,1,1,1,1)
+    );
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
 }

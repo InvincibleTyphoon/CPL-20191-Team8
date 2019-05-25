@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                     httpRequester.addToSendQueue(jsonObject);
+                    turnOffDataClickMode();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -102,17 +103,23 @@ public class MainActivity extends AppCompatActivity {
 
     //데이터 수집 버튼 클릭 이벤트 처리
     public void onDataCollectButtonClicked(View view)
-    {
-        if(isCollectingMode)
-        {
-            isCollectingMode = false;
-            ((Button) view).setText("Start");
+            {
+                if(isCollectingMode)
+                {
+                    isCollectingMode = false;
+                    ((Button) view).setText("Start");
         }else{
             isCollectingMode = true;
             setCurrentCoord();
             ((Button) view).setText("Stop");
         }
 
+    }
+
+    public void turnOffDataClickMode()
+    {
+        isCollectingMode = false;
+        ((Button) findViewById(R.id.GatherButton)).setText("Start");
     }
 
     //전송 버튼 클릭

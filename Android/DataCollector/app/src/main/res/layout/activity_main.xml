@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="xCoord"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:text="0.0" />
 
         <EditText
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="yCoord"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:text="0.0" />
 
         <TextView
