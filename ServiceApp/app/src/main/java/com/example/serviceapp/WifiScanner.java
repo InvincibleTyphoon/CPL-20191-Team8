@@ -35,7 +35,7 @@ public class WifiScanner {
                     if(Settings.collectingWifiScanResultDataTypes.contains(Settings.WIFI_SSID))
                         item.put(Settings.WIFI_SSID, ssid);
                     if(Settings.collectingWifiScanResultDataTypes.contains(Settings.WIFI_BSSID))
-                        item.put(Settings.WIFI_SSID, bssid);
+                        item.put(Settings.WIFI_BSSID, bssid);
                     if(Settings.collectingWifiScanResultDataTypes.contains(Settings.WIFI_LEVEL))
                         item.put(Settings.WIFI_LEVEL_JSON, level);
                     jsonArr.put(item);

@@ -35,6 +35,8 @@ public class PositionRequester_ImmediateResponse {
 
     //queue 내에 쌓인 Json Object들을 서버로 post한다.
     public void sendGetRequest() {
+        if(!Settings.mode.equals(Settings.SERVICE_MODE))
+            return;
         //네트워크 작업은 메인쓰레드에서 작업하면 안되므로 새로운 쓰레드를 생성해서 작업
         AsyncTask.execute(new Runnable() {
             @Override

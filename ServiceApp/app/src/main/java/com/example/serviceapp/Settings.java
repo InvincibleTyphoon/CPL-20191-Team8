@@ -33,12 +33,12 @@ public class Settings {
     /*****************************와이파이 스캔 관련 설정******************************************/
     public static String WIFI_JSON = "WifiInfo";
     public static String WIFI_SSID = "SSID";
-    public static String WIFI_BSSID = "BSID";
+    public static String WIFI_BSSID = "BSSID";
     public static String WIFI_LEVEL = "WIFI_LEVEL";
     public static String WIFI_LEVEL_JSON = "WifiLevel";
 
     public static ArrayList<String> collectingWifiScanResultDataTypes = new ArrayList<String>(
-            Arrays.asList(WIFI_SSID,WIFI_LEVEL)
+            Arrays.asList(WIFI_BSSID,WIFI_LEVEL)
     );
     /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,13 +48,30 @@ public class Settings {
     ///////////////////////////////////////////////////////////////////////
 
 
+    /*****************************모드 관련******************************************************/
+    public static String SERVICE_MODE = "SERVICE_MODE";
+    public static String STEP_SCENARIO_MODE = "STEP_SCENARIO_MODE";
+    public static int stepScenarioIdx = 0;
+    public static String INITIALIZE_SCENARIO_MODE = "INITIALIZE_SCENARIO_MODE";
+    public static String mode = STEP_SCENARIO_MODE;
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    public static ArrayList<Float> ScenarioX = new ArrayList<Float>(
+            Arrays.asList(1f,2f,3f,4f,5f,6f,7f,8f,9f,10f)
+    );
+
+    public static ArrayList<Float> ScenarioY = new ArrayList<Float>(
+            Arrays.asList(1f,2f,3f,4f,5f,6f,7f,8f,9f,10f)
+    );
+
+
 
     /***************************테스팅용 초기 데이터 삽입***********************************************/
     public static ArrayList<Integer> initialX = new ArrayList<Integer>(
-            Arrays.asList(1,2,3,4,5,6,7,8,9,10)
+           // Arrays.asList(1,2,3,4,5,6,7,8,9,10)
     );
     public static ArrayList<Integer> initialY = new ArrayList<Integer>(
-            Arrays.asList(1,1,1,1,1,1,1,1,1,1)
+            //Arrays.asList(1,1,1,1,1,1,1,1,1,1)
     );
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

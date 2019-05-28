@@ -7,8 +7,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.wifi.WifiManager;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -117,6 +119,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.i("Thirty",sendObject.toString());
                 requester.addToSendQueue(sendObject);
                 requester.sendGetRequest();
             }
@@ -135,6 +138,16 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
             graph.addSeries(series);
         }
         ////////////////////////////////////////////////////////////////////
+        if(Settings.mode.equals(Settings.INITIALIZE_SCENARIO_MODE)) {
+            int scenarioSize = Settings.ScenarioX.size();
+            for (int i = 0; i < scenarioSize; i++) {
+                PointsGraphSeries<DataPoint> series = new PointsGraphSeries<DataPoint>(new DataPoint[]{
+                        new DataPoint(Settings.ScenarioX.get(i), Settings.ScenarioY.get(i))
+                });
+                graph.addSeries(series);
+            }
+        }
+
     }
 
     void updateText()
@@ -149,6 +162,12 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         {
             coord.set(0,(float)(coord.get(0) + Math.cos(seta) * Settings.stepSize));
             coord.set(1,(float)(coord.get(1) + Math.sin(seta) * Settings.stepSize));
+
+            if(Settings.mode.equals(Settings.STEP_SCENARIO_MODE))
+            {
+                positionReceivingEventUpdate(Settings.ScenarioX.get(Settings.stepScenarioIdx),Settings.ScenarioY.get(Settings.stepScenarioIdx));
+                Settings.stepScenarioIdx++;
+            }
         }
 
         if(event.sensor.getType() == Sensor.TYPE_ORIENTATION)
