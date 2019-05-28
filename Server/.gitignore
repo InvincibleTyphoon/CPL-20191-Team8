@@ -1,1 +1,5 @@
 .vscode/
+config/
+db/__pycache__/
+
+*.pyc
