@@ -2,6 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Activation
 from keras.optimizers import Adam
 from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.externals import joblib
 import pandas as pd
 import numpy as np
@@ -60,12 +61,13 @@ class Model():
         return self.scaler.transform(results)
 
     def predict(self, data):
-        return self.model.predict(data, verbose=0).reshape(-1)
+        return self.model.predict(data).reshape(-1)
 
 
 class SmallModel(Model):
     def __init__(self):
         self.model = joblib.load("/home/gwak/univ/CPL-20191-Team8/Server/model/small_data/small_1nn_model.sav")
+        self.model.n_neighbors = 1
         self.scaler = joblib.load("/home/gwak/univ/CPL-20191-Team8/Server/model/small_data/small_std_scaler.pickle")
         print("Object SmallModel() is loaded.")
         self._columns = [  
