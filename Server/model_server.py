@@ -27,8 +27,8 @@ class ModelServer(Resource):
             # parsing
             _userMagnetic = _userData['Magnetic']
             _userWifiInfo = _userData['WifiInfo']
-            _userX = _userData['x']
-            _userY = _userData['y']
+            # _userX = _userData['x']
+            # _userY = _userData['y']
             sampleMagnetic = dict()
             sampleMagnetic[u'x'] = _userMagnetic[0]
             sampleMagnetic[u'y'] = _userMagnetic[1]
@@ -36,13 +36,17 @@ class ModelServer(Resource):
             
             # predict
             sample_np = model.parse_data(sampleMagnetic, _userWifiInfo)
+            print("std sample:", sample_np)
             sample_predict = model.predict(sample_np)
-            
-            return {
+            result = {
                 "status": "success",
-                "XCoord": sample_predict[0],
-                "YCoord": sample_predict[1]
+                "xCoord": float(sample_predict[0]),
+                "yCoord": float(sample_predict[1])
             }
+            print("Inference :")
+            pprint(result)
+
+            return result
         except Exception as e:
             print("Error:", str(e))
             return {

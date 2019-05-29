@@ -27,9 +27,11 @@ _columns_pos = {
 class Model():
     def __init__(self):
         self.model = Sequential()
-        self.scaler = joblib.load("./std_scaler.pickle")
+        self.scaler = joblib.load("/home/gwak/univ/CPL-20191-Team8/Server/model/std_scaler.pickle")
         self.set_model()
-        self.model.load_weights("./best_model.h5")
+        self.model.load_weights("/home/gwak/univ/CPL-20191-Team8/Server/model/best_model.h5")
+        self.model._make_predict_function()
+        print("Object Model() is loaded.")
 
     def set_model(self):
         opt = Adam(lr=0.05)
@@ -52,11 +54,12 @@ class Model():
             if item['BSSID'] in _columns:
                 results[_columns_pos[item['BSSID']]] = item['WifiLevel']
 
-        results = np.array(results, dtype=np.float64)
+        print("init sample:", results)
+        results = np.array(results, dtype=np.float64).reshape(1, -1)
         return self.scaler.transform(results)
 
     def predict(self, data):
-        return self.model.predict(data, verbose=0)
+        return self.model.predict(data, verbose=0).reshape(-1)
 
 
 ## Test code
