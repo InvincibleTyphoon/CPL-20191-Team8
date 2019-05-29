@@ -2,14 +2,14 @@ from flask import Flask, make_response
 from flask import request, Request
 from flask_restful import Resource, Api
 from flask_restful import reqparse
-from model.model import Model
+from model.model import *
 from pprint import pprint 
 import json
 
 
 app = Flask(__name__)
 api = Api(app)
-model = Model()
+model = SmallModel() # Model()
 
 
 class ModelServer(Resource):
