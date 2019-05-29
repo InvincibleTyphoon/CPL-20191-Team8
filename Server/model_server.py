@@ -6,9 +6,11 @@ from model.model import Model
 from pprint import pprint 
 import json
 
+
 app = Flask(__name__)
 api = Api(app)
 model = Model()
+
 
 class ModelServer(Resource):
     def get(self):
@@ -18,6 +20,7 @@ class ModelServer(Resource):
             parser.add_argument('data', type=str)
             args = parser.parse_args()
 
+            # to json
             _userData = json.loads(args['data'])
             pprint(_userData)
 
@@ -26,29 +29,25 @@ class ModelServer(Resource):
             _userWifiInfo = _userData['WifiInfo']
             _userX = _userData['x']
             _userY = _userData['y']
-
             sampleMagnetic = dict()
             sampleMagnetic[u'x'] = _userMagnetic[0]
             sampleMagnetic[u'y'] = _userMagnetic[1]
             sampleMagnetic[u'z'] = _userMagnetic[2]
             
-            sampleWifi = dict()
-            for i, data in enumerate(_userWifiInfo):
-                sampleWifi[str(i)] = data
-
-            pprint(sampleMagnetic)
-            pprint(sampleWifi)
-
+            # predict
+            sample_np = model.parse_data(sampleMagnetic, _userWifiInfo)
+            sample_predict = model.predict(sample_np)
+            
             return {
                 "status": "success",
-                "XCoord": 0.0,
-                "YCoord": 0.0
+                "XCoord": sample_predict[0],
+                "YCoord": sample_predict[1]
             }
         except Exception as e:
             print("Error:", str(e))
             return {
                 'status': 'error',
-                'error': str(e)
+                'exception': str(e)
             }
 
 
