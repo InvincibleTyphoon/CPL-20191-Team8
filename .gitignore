@@ -5,3 +5,4 @@ Server/db/__pycache__/DBConn.cpython-36.pyc
 *.csv
 Model/data/
 .ipynb_checkpoints
+.vscode/
